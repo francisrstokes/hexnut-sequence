@@ -1,6 +1,6 @@
 {
   "name": "hexnut-sequence",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Sequencing middleware for the HexNut framework",
   "main": "index.js",
   "scripts": {
