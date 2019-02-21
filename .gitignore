@@ -1,5 +1,4 @@
 node_modules/
 .sketchpad/
-/index.js
 coverage/
 .vscode
