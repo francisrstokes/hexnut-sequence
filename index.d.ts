@@ -33,13 +33,14 @@ export declare type SequenceCommand =
 export declare type MiddlewareFn<Ctx> = (ctx: Ctx, next: () => void) => void;
 export declare type MessageCheckFn = (message: any) => boolean;
 export declare type SequenceResult = any;
-export declare type SequenceProcessorFn<Ctx> = (ctx: Ctx) => Generator<SequenceCommand, void, SequenceResult>;
+export declare type SequenceProcessorFn<Ctx, T> = (ctx: Ctx, next: () => void) =>
+  Generator<SequenceCommand, void, T>;
 
-declare function onConnect<Ctx>(connectionHandler: SequenceProcessorFn<Ctx>): MiddlewareFn<Ctx>;
-declare function interruptible<Ctx>(connectionHandler: SequenceProcessorFn<Ctx>): MiddlewareFn<Ctx>;
-declare function interuptable<Ctx>(connectionHandler: SequenceProcessorFn<Ctx>): MiddlewareFn<Ctx>;
-declare function uninterruptible<Ctx>(connectionHandler: SequenceProcessorFn<Ctx>): MiddlewareFn<Ctx>;
-declare function uninteruptable<Ctx>(connectionHandler: SequenceProcessorFn<Ctx>): MiddlewareFn<Ctx>;
+declare function onConnect<Ctx, T = any>(connectionHandler: SequenceProcessorFn<Ctx, T>): MiddlewareFn<Ctx>;
+declare function interruptible<Ctx, T = any>(connectionHandler: SequenceProcessorFn<Ctx, T>): MiddlewareFn<Ctx>;
+declare function interuptable<Ctx, T = any>(connectionHandler: SequenceProcessorFn<Ctx, T>): MiddlewareFn<Ctx>;
+declare function uninterruptible<Ctx, T = any>(connectionHandler: SequenceProcessorFn<Ctx, T>): MiddlewareFn<Ctx>;
+declare function uninteruptable<Ctx, T = any>(connectionHandler: SequenceProcessorFn<Ctx, T>): MiddlewareFn<Ctx>;
 
 declare function matchMessage(matchFn: MessageCheckFn): MatchMessageCommand;
 declare function getMessage(): GetMessageCommand;
