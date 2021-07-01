@@ -75,10 +75,10 @@ const sequenceProcessor = explicitConnection => isInteruptable => generator => {
 module.exports = {
   onConnect: sequenceProcessor(true)(true),
 
-  interruptible:sequenceProcessor(false)(true),
+  interruptible: sequenceProcessor(false)(true),
   interuptable: sequenceProcessor(false)(true),
 
-  uninterruptible:sequenceProcessor(false)(false),
+  uninterruptible: sequenceProcessor(false)(false),
   uninteruptable: sequenceProcessor(false)(false),
   matchMessage: matchFn => ({
     messageType: 'message',
