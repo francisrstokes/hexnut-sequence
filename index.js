@@ -32,6 +32,7 @@ async function process(explicitConnection, isInteruptable, name, sequence, ctx, 
       return await next();
     }
     getNext(sequence, name, ctx);
+    return await process(explicitConnection, isInteruptable, name, sequence, ctx, next, wait);
   }
 
   if (sequence.waitingFor.messageType === 'await') {
@@ -39,7 +40,7 @@ async function process(explicitConnection, isInteruptable, name, sequence, ctx, 
     const {value, done} = sequence.iterator.next(promiseValue);
     sequence.waitingFor = value;
     if (done) initSequence(ctx, next, sequence.generator, name, explicitConnection);
-    return await process(explicitConnection, isInteruptable, name, sequence, ctx, next);
+    return await process(explicitConnection, isInteruptable, name, sequence, ctx, next, wait);
   }
 
   if (wait) return;
@@ -68,7 +69,7 @@ const sequenceProcessor = explicitConnection => isInteruptable => generator => {
   return async (ctx, next) => {
     if (!ctx[SEQUENCE_SYMBOL]) ctx[SEQUENCE_SYMBOL] = {};
     if (!ctx[SEQUENCE_SYMBOL][name]) initSequence(ctx, next, generator, name, explicitConnection);
-    return await process(explicitConnection, isInteruptable, name, ctx[SEQUENCE_SYMBOL][name], ctx, next);
+    return await process(explicitConnection, isInteruptable, name, ctx[SEQUENCE_SYMBOL][name], ctx, next, false);
   };
 };
 
